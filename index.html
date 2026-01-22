@@ -63,11 +63,12 @@
             display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
         }
 
-        /* Стиль для предупреждения о ценах */
+        /* ПРЕДУПРЕЖДЕНИЕ О ЦЕНАХ */
         .price-warning {
             margin-top: 15px; padding-top: 15px; border-top: 1px dashed #eee;
-            color: #777; font-size: 0.85rem; line-height: 1.4; display: flex; gap: 8px;
+            color: #555; font-size: 0.85rem; line-height: 1.4; display: flex; gap: 10px; align-items: flex-start;
         }
+        .price-warning i { color: var(--primary); margin-top: 3px; }
 
         /* --- ЗАГОЛОВКИ --- */
         .sec-title { 
@@ -208,11 +209,11 @@
             </div>
         </div>
         
-        <!-- НОВОЕ ПРЕДУПРЕЖДЕНИЕ -->
+        <!-- ПРЕДУПРЕЖДЕНИЕ О ЦЕНАХ -->
         <div class="price-warning">
             <i class="fas fa-info-circle"></i>
             <div>
-                <b>Обратите внимание:</b> цены на живые цветы зависят от сезона и поставок. Расчет в конструкторе — предварительный. Точную сумму мы подтвердим при оформлении заказа.
+                <b>Обратите внимание:</b> Цены на живые цветы зависят от сезона и поставок. Расчет в конструкторе — предварительный. Точную сумму подтвердит флорист при оформлении.
             </div>
         </div>
     </div>
@@ -260,7 +261,7 @@
     </footer>
 
     <script>
-        // СПИСОК ЦВЕТОВ
+        // СПИСОК ЦВЕТОВ (ИЩЕТ КАРТИНКИ РЯДОМ С ФАЙЛОМ INDEX.HTML)
         const flowers = [
             { id: 1, name: "Альстромерия", price: 190, fileName: "alstroemeria.jpg" },
             { id: 2, name: "Гвоздика", price: 120, fileName: "carnation.jpg" },
@@ -290,7 +291,7 @@
         let isAdmin = false;
 
         function init() {
-            const saved = localStorage.getItem('prices_v14');
+            const saved = localStorage.getItem('prices_v15');
             if(saved) {
                 const data = JSON.parse(saved);
                 flowers.forEach(f => { if(data[f.id]) f.price = data[f.id]; });
@@ -305,7 +306,7 @@
             el.innerHTML = flowers.map(f => `
                 <div class="f-card">
                     <div class="f-img">
-                        <!-- ВНИМАНИЕ: Файлы ищутся в корне (там, где index.html) -->
+                        <!-- ИЩЕМ ФАЙЛ В КОРНЕ (без images/) -->
                         <img src="${f.fileName}" onerror="this.src='https://placehold.co/300?text=${f.name}'">
                     </div>
                     <div class="f-info">
@@ -406,10 +407,7 @@
             let txt = "🌹 НОВЫЙ ЗАКАЗ:\n\n" + cart.map(i => `• ${i.name} — ${i.qty} шт.`).join('\n');
             let tot = cart.reduce((s, i) => s + (i.price * i.qty), 0);
             txt += `\n\n💰 Итого: ${tot} ₽`;
-            
-            // Добавляем приписку о примерной стоимости
             txt += `\n\n*Расчет предварительный, точную сумму подтвердит флорист.`;
-            
             navigator.clipboard.writeText(txt).then(() => alert('Состав скопирован!'));
         }
 
@@ -436,7 +434,7 @@
             val = parseInt(val);
             if(type==='f') flowers.find(x=>x.id===id).price = val; else packs.find(x=>x.id===id).price = val;
             let d = {}; flowers.forEach(f=>d[f.id]=f.price); packs.forEach(p=>d[p.id]=p.price);
-            localStorage.setItem('prices_v14', JSON.stringify(d));
+            localStorage.setItem('prices_v15', JSON.stringify(d));
             document.getElementById(`pr-${id}`).innerText = val + ' ₽'; renderCart();
         }
 
