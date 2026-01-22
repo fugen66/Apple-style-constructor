@@ -5,228 +5,253 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Конструктор Букетов</title>
     
-    <!-- Иконки для приложения -->
+    <!-- Иконки -->
     <link rel="icon" type="image/png" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
 
-    <!-- Шрифты и иконки -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --primary: #D81B60; 
-            --bg-color: #F3F4F6;
-            --text-main: #333;
-            /* Градиенты как на скринах */
-            --btn-purple: linear-gradient(90deg, #D4A5FF 0%, #E3C3FC 100%);
-            --btn-pink: linear-gradient(90deg, #FFB6C1 0%, #FFD1DC 100%);
-            --btn-red: #FF5252; 
-            --btn-blue: #5856D6;
+            --bg-body: #F0F2F5;
+            --text: #333;
+            --btn-add: #6200EA;
+            --btn-copy: #D1C4E9; --btn-copy-text: #512DA8;
+            --btn-rand: #FFCDD2; --btn-rand-text: #C62828;
+            --btn-clear: #FF5252;
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-body);
+            color: var(--text);
             margin: 0;
-            padding: 20px 10px 100px 10px;
-            -webkit-font-smoothing: antialiased;
+            padding: 20px 10px 120px 10px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* --- ШАПКА --- */
-        header { text-align: center; margin-bottom: 25px; }
-        .logo-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .logo-icon { color: var(--primary); font-size: 1.8rem; }
+        header { text-align: center; margin-bottom: 30px; }
         .main-title { 
-            font-weight: 900; font-size: 1.6rem; color: var(--primary);
-            text-transform: uppercase; margin: 0; 
+            color: var(--primary); font-weight: 800; font-size: 1.8rem; 
+            text-transform: uppercase; margin: 0; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .subtitle { color: #888; font-size: 0.85rem; margin-top: 5px; font-weight: 600; }
+        .subtitle { color: #888; margin-top: 5px; font-weight: 500; font-size: 0.9rem; }
 
-        /* ИНСТРУКЦИЯ */
+        /* --- ИНСТРУКЦИЯ --- */
         .instruction-card {
-            background: white; border-radius: 12px; padding: 20px; text-align: left;
-            max-width: 800px; margin: 20px auto; border-left: 5px solid var(--primary);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            background: white; border-radius: 12px; padding: 25px; 
+            max-width: 1000px; margin: 20px auto; border-left: 6px solid var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .instruction-card h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
-        .instruction-card ol { padding-left: 20px; margin: 0; color: #555; font-size: 0.85rem; line-height: 1.5; }
-        .instruction-card li { margin-bottom: 5px; }
+        .inst-header {
+            font-weight: 700; color: var(--primary); font-size: 1.1rem; 
+            margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+        }
+        .inst-list {
+            margin: 0; padding-left: 20px; color: #444; font-size: 0.95rem; line-height: 1.6;
+        }
+        .inst-list li { margin-bottom: 8px; }
+        
         .tip-box {
-            background: #FFF8E1; border-radius: 6px; padding: 10px; margin-top: 15px;
-            font-size: 0.8rem; color: #F57F17; display: flex; align-items: center; gap: 8px;
+            background-color: #FFF8E1; color: #F57F17; padding: 12px 15px; 
+            border-radius: 6px; font-size: 0.9rem; margin-top: 20px; 
+            display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
         }
 
-        /* --- ЗАГОЛОВКИ СЕКЦИЙ --- */
-        .section-header { 
-            text-align: center; font-weight: 800; font-size: 1.1rem; color: var(--primary);
-            margin: 30px 0 15px 0; display: flex; align-items: center; justify-content: center; gap: 8px;
+        /* Стиль для предупреждения о ценах */
+        .price-warning {
+            margin-top: 15px; padding-top: 15px; border-top: 1px dashed #eee;
+            color: #777; font-size: 0.85rem; line-height: 1.4; display: flex; gap: 8px;
+        }
+
+        /* --- ЗАГОЛОВКИ --- */
+        .sec-title { 
+            text-align: center; font-weight: 700; color: var(--primary); 
+            margin: 30px 0 15px 0; font-size: 1.1rem; 
         }
 
         /* --- СЕТКА ЦВЕТОВ --- */
-        .grid-flowers { 
-            display: grid; grid-template-columns: repeat(2, 1fr); 
-            gap: 12px; max-width: 800px; margin: 0 auto;
+        .grid-flowers {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+            max-width: 1000px; margin: 0 auto;
         }
-        @media(min-width: 600px) { .grid-flowers { grid-template-columns: repeat(4, 1fr); } }
+        @media(min-width: 700px) { .grid-flowers { grid-template-columns: repeat(5, 1fr); } }
 
-        .f-card { 
-            background: white; border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column;
+        .f-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column;
         }
-        .f-img-box { height: 150px; position: relative; background: #eee; }
-        /* ВАЖНО: object-fit: cover обрезает фото под квадрат */
-        .f-img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .f-details { padding: 10px; text-align: center; }
-        .f-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; min-height: 32px; display: flex; align-items: center; justify-content: center; }
-        .f-cost { color: #888; font-weight: 600; margin-bottom: 10px; font-size: 0.85rem; }
-
-        .qty-wrap { display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .f-img { height: 150px; background: #eee; position: relative; }
+        .f-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .f-info { padding: 10px; text-align: center; }
+        .f-name { font-weight: 600; font-size: 0.8rem; margin-bottom: 5px; height: 35px; display: flex; align-items: center; justify-content: center; }
+        .f-price { color: #888; font-size: 0.85rem; margin-bottom: 10px; }
+        
+        .qty-row { display: flex; justify-content: center; gap: 8px; }
         .q-btn { 
-            width: 28px; height: 28px; border-radius: 6px; border: 1px solid #ddd; 
-            background: #fff; color: #333; font-weight: bold; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; border: 1px solid #ddd; background: #fff; 
+            border-radius: 6px; font-weight: bold; cursor: pointer; 
         }
-        .q-btn:active { background: #eee; }
 
         /* --- УПАКОВКА --- */
-        .grid-packs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 800px; margin: 0 auto; }
-        @media(min-width: 500px) { .grid-packs { grid-template-columns: repeat(4, 1fr); } }
+        .grid-packs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 1000px; margin: 0 auto; }
+        @media(min-width: 600px) { .grid-packs { grid-template-columns: repeat(4, 1fr); } }
 
         .p-card {
-            background: #fff; border-radius: 10px; padding: 15px 5px; text-align: center;
-            cursor: pointer; border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            background: white; border-radius: 10px; padding: 15px 5px; text-align: center;
+            cursor: pointer; border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .p-card.active { border-color: var(--primary); background: #FFF0F5; }
-        .p-icon { font-size: 2rem; margin-bottom: 8px; }
-        .p-name { font-size: 0.8rem; font-weight: 700; }
-        .p-price { font-size: 0.75rem; color: var(--primary); font-weight: 700; }
+        .p-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .p-name { font-size: 0.85rem; font-weight: 700; }
+        .p-price { font-size: 0.8rem; color: var(--primary); font-weight: 700; margin-top: 5px; }
 
-        /* --- ПАНЕЛЬ "ДОБАВИТЬ СВОЙ" (КАК НА СКРИНЕ) --- */
-        .custom-panel {
+        /* --- БЛОК "ДОБАВИТЬ СВОЙ ВАРИАНТ" --- */
+        .custom-block { max-width: 1000px; margin: 30px auto; }
+        .custom-label { text-align: center; color: var(--primary); font-weight: 700; margin-bottom: 10px; font-size: 0.9rem; }
+        
+        .custom-card {
             background: white; padding: 15px; border-radius: 12px; 
-            max-width: 800px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
         }
-        .custom-title { text-align: center; color: var(--primary); font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; }
         
-        .custom-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-        .c-input { 
-            flex: 1; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; 
-            font-size: 0.9rem; min-width: 120px;
+        .inp {
+            padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem;
+            outline: none; background: #fff; flex: 1; min-width: 120px;
         }
-        .c-qty-input { width: 60px; text-align: center; flex: none; }
-        .btn-add { 
-            background: var(--btn-blue); color: white; border: none; 
-            padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; 
-            flex: 1; min-width: 100px;
+        .inp-qty { width: 60px; text-align: center; flex: none; }
+        
+        .btn-add-custom {
+            background: var(--btn-add); color: white; border: none; padding: 12px 25px;
+            border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1; min-width: 120px;
         }
 
-        /* --- ВАШ БУКЕТ (КАК НА СКРИНЕ) --- */
-        .cart-panel {
-            background: white; padding: 20px; border-radius: 12px; 
-            max-width: 800px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .cart-header { text-align: center; color: var(--primary); font-weight: 700; margin-bottom: 15px; }
+        /* --- БЛОК "ВАШ БУКЕТ" --- */
+        .cart-block { max-width: 1000px; margin: 30px auto; }
+        .cart-label { text-align: center; color: var(--primary); font-weight: 700; margin-bottom: 10px; font-size: 0.9rem; }
         
-        .cart-list { min-height: 50px; }
-        .empty-text { text-align: center; color: #aaa; font-style: italic; padding: 10px; }
-        
-        .c-item { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 10px 0; border-bottom: 1px solid #f0f0f0; 
+        .cart-card {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); min-height: 100px;
         }
-        .c-item:last-child { border-bottom: none; }
+        
+        .empty-state { text-align: center; color: #888; margin-top: 20px; }
+        
+        .cart-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid #f5f5f5;
+        }
+        .cart-item:last-child { border-bottom: none; }
+        
         .c-name { font-weight: 600; font-size: 0.9rem; }
-        .c-det { font-size: 0.8rem; color: #777; }
-        
-        .total-row { 
-            text-align: right; font-size: 1.3rem; font-weight: 900; 
-            margin-top: 20px; color: #333; 
+        .c-info { font-size: 0.8rem; color: #777; }
+        .c-price { font-weight: 700; color: #333; }
+        .c-del { color: #ff5252; cursor: pointer; margin-left: 10px; }
+
+        .total-line {
+            text-align: right; font-size: 1.4rem; font-weight: 900; 
+            margin-top: 20px; color: #333;
         }
 
-        /* --- КНОПКИ ВНИЗУ (КАК НА СКРИНЕ) --- */
-        .actions-grid {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
-            max-width: 800px; margin: 20px auto 0 auto;
+        /* --- НИЖНИЕ КНОПКИ --- */
+        .bottom-actions {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+            max-width: 1000px; margin: 20px auto;
         }
-        @media(max-width: 500px) { .actions-grid { grid-template-columns: 1fr; } }
+        @media(max-width: 500px) { .bottom-actions { grid-template-columns: 1fr; } }
 
-        .bot-btn {
-            border: none; padding: 15px; border-radius: 8px;
-            font-weight: 700; font-size: 0.8rem; cursor: pointer;
-            text-transform: uppercase; color: #333;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        .b-btn {
+            border: none; padding: 15px; border-radius: 8px; font-weight: 700;
+            font-size: 0.85rem; cursor: pointer; text-transform: uppercase;
             display: flex; align-items: center; justify-content: center; gap: 5px;
         }
-        .btn-copy { background: var(--btn-purple); }
-        .btn-rand { background: var(--btn-pink); }
-        .btn-clear { background: var(--btn-red); color: white; }
+        .btn-1 { background: var(--btn-copy); color: var(--btn-copy-text); }
+        .btn-2 { background: var(--btn-rand); color: var(--btn-rand-text); }
+        .btn-3 { background: var(--btn-clear); color: white; }
 
-        /* Админка */
         footer { text-align: center; margin-top: 40px; color: #ccc; font-size: 0.75rem; }
-        .adm-input { width: 80%; margin: 5px auto; padding: 2px; border: 1px solid red; text-align: center; }
+        .adm-input { width: 80%; margin: 5px auto; padding: 2px; border: 1px solid red; display: none; text-align: center; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-row">
-            <i class="fas fa-fan logo-icon"></i>
-            <h1 class="main-title">Конструктор Букетов</h1>
+        <div class="main-title">
+            <i class="fas fa-fan" style="color:#D81B60; margin-right:10px;"></i>
+            Конструктор
         </div>
-        <div class="subtitle">Создайте свой идеальный букет</div>
+        <div class="subtitle">Собери свой идеальный букет</div>
     </header>
 
     <div class="instruction-card">
-        <h3><i class="far fa-file-alt"></i> Как пользоваться:</h3>
-        <ol>
-            <li>Выберите понравившиеся цветы, указав их количество</li>
-            <li>Выберите цвет для каждого типа цветка (укажите в сообщении)</li>
-            <li>Выберите тип упаковки</li>
-            <li>Нажмите кнопку "СКОПИРОВАТЬ СОСТАВ"</li>
-            <li>Вставьте текст в сообщение нам</li>
+        <div class="inst-header">
+            <i class="far fa-file-alt"></i> Как пользоваться конструктором:
+        </div>
+        <ol class="inst-list">
+            <li>Выберите понравившиеся цветы, указав их количество.</li>
+            <li>Выберите цвет для каждого типа цветка <span style="font-size:0.85em; color:#999;">(укажите в сообщении)</span>.</li>
+            <li>Выберите тип упаковки.</li>
+            <li>Нажмите кнопку <b>"СКОПИРОВАТЬ СОСТАВ"</b>.</li>
+            <li>Вставьте скопированный текст в сообщение нам.</li>
         </ol>
         <div class="tip-box">
-            <i class="far fa-lightbulb"></i>
-            <span>Совет: Вы можете добавить свой цветок в специальном поле внизу!</span>
+            <i class="far fa-lightbulb" style="font-size: 1.2rem;"></i>
+            <div>
+                <b>Совет:</b> Вы можете добавить свой цветок в специальном поле внизу!
+            </div>
+        </div>
+        
+        <!-- НОВОЕ ПРЕДУПРЕЖДЕНИЕ -->
+        <div class="price-warning">
+            <i class="fas fa-info-circle"></i>
+            <div>
+                <b>Обратите внимание:</b> цены на живые цветы зависят от сезона и поставок. Расчет в конструкторе — предварительный. Точную сумму мы подтвердим при оформлении заказа.
+            </div>
         </div>
     </div>
 
     <!-- ЦВЕТЫ -->
+    <div class="sec-title">💐 Выберите цветы</div>
     <div class="grid-flowers" id="flowers-area"></div>
 
     <!-- УПАКОВКА -->
-    <div class="section-header"><i class="fas fa-gift"></i> Выберите упаковку</div>
+    <div class="sec-title">🎁 Выберите упаковку</div>
     <div class="grid-packs" id="packs-area"></div>
 
-    <!-- ДОБАВИТЬ СВОЙ ВАРИАНТ (Стиль как на скрине) -->
-    <div class="custom-panel">
-        <div class="custom-title">Добавить свой вариант</div>
-        <div class="custom-form">
-            <input type="text" id="c-name" class="c-input" placeholder="Название цветка">
-            <input type="text" id="c-color" class="c-input" placeholder="Цвет (необяз.)">
-            <input type="number" id="c-qty" class="c-input c-qty-input" value="1" min="1">
-            <button class="btn-add" onclick="addCustom()">+ Добавить</button>
+    <!-- ДОБАВИТЬ СВОЙ ВАРИАНТ -->
+    <div class="custom-block">
+        <div class="custom-label">Добавить свой вариант</div>
+        <div class="custom-card">
+            <input type="text" id="c-name" class="inp" placeholder="Название цветка">
+            <input type="text" id="c-color" class="inp" placeholder="Цвет (необяз.)">
+            <input type="number" id="c-qty" class="inp inp-qty" value="1" min="1">
+            <button class="btn-add-custom" onclick="addCustom()">+ Добавить</button>
         </div>
     </div>
 
-    <!-- ВАШ БУКЕТ (Стиль как на скрине) -->
-    <div class="cart-panel">
-        <div class="cart-header">Ваш букет</div>
-        <div id="cart-area" class="cart-list">
-            <div class="empty-text">Пока пусто... Выберите цветы выше 👆</div>
+    <!-- КОРЗИНА -->
+    <div class="cart-block">
+        <div class="cart-label">Ваш букет</div>
+        <div class="cart-card">
+            <div id="cart-area">
+                <div class="empty-state">Пока пусто... Выберите цветы выше 👆</div>
+            </div>
+            <div class="total-line" id="total-sum">Итого: 0 ₽</div>
         </div>
-        <div class="total-row" id="total-sum">Итого: 0 ₽</div>
-        
-        <!-- КНОПКИ -->
-        <div class="actions-grid">
-            <button class="bot-btn btn-copy" onclick="copyOrder()"><i class="far fa-copy"></i> Скопировать</button>
-            <button class="bot-btn btn-rand" onclick="randomBouquet()"><i class="fas fa-magic"></i> Случайный</button>
-            <button class="bot-btn btn-clear" onclick="clearAll()">Очистить всё</button>
-        </div>
+    </div>
+
+    <!-- КНОПКИ ВНИЗУ -->
+    <div class="bottom-actions">
+        <button class="b-btn btn-1" onclick="copyOrder()"><i class="far fa-copy"></i> Скопировать</button>
+        <button class="b-btn btn-2" onclick="randomBouquet()"><i class="fas fa-magic"></i> Случайный</button>
+        <button class="b-btn btn-3" onclick="clearAll()">Очистить всё</button>
     </div>
 
     <footer>
@@ -235,7 +260,7 @@
     </footer>
 
     <script>
-        // ДАННЫЕ (Внимание к названиям файлов!)
+        // СПИСОК ЦВЕТОВ
         const flowers = [
             { id: 1, name: "Альстромерия", price: 190, fileName: "alstroemeria.jpg" },
             { id: 2, name: "Гвоздика", price: 120, fileName: "carnation.jpg" },
@@ -255,7 +280,7 @@
         ];
 
         const packs = [
-            { id: 101, name: "Упаковка", price: 150, icon: "fa-scroll", color: "#9575CD" },
+            { id: 101, name: "Бумага", price: 150, icon: "fa-scroll", color: "#9575CD" },
             { id: 102, name: "Коробка", price: 350, icon: "fa-box-open", color: "#8D6E63" },
             { id: 103, name: "Сумка", price: 250, icon: "fa-shopping-bag", color: "#EC407A" },
             { id: 104, name: "Корзина", price: 500, icon: "fa-shopping-basket", color: "#FFA726" }
@@ -265,7 +290,7 @@
         let isAdmin = false;
 
         function init() {
-            const saved = localStorage.getItem('prices_v9');
+            const saved = localStorage.getItem('prices_v14');
             if(saved) {
                 const data = JSON.parse(saved);
                 flowers.forEach(f => { if(data[f.id]) f.price = data[f.id]; });
@@ -279,17 +304,17 @@
             const el = document.getElementById('flowers-area');
             el.innerHTML = flowers.map(f => `
                 <div class="f-card">
-                    <div class="f-img-box">
-                        <!-- ТУТ ПУТЬ К КАРТИНКАМ -->
-                        <img src="images/${f.fileName}" onerror="this.src='https://placehold.co/300?text=${f.name}'">
+                    <div class="f-img">
+                        <!-- ВНИМАНИЕ: Файлы ищутся в корне (там, где index.html) -->
+                        <img src="${f.fileName}" onerror="this.src='https://placehold.co/300?text=${f.name}'">
                     </div>
-                    <div class="f-details">
-                        <div class="f-title">${f.name}</div>
-                        <div class="f-cost">${f.price} ₽</div>
+                    <div class="f-info">
+                        <div class="f-name">${f.name}</div>
+                        <div class="f-price" id="pr-${f.id}">${f.price} ₽</div>
                         <input type="number" class="adm-input" style="display:${isAdmin?'block':'none'}" value="${f.price}" onchange="setPrice(${f.id}, this.value, 'f')">
-                        <div class="qty-wrap">
+                        <div class="qty-row">
                             <button class="q-btn" onclick="modCart(${f.id}, -1)">-</button>
-                            <span style="font-weight:bold; min-width:20px;">${getItemQty(f.id)}</span>
+                            <span id="q-cnt-${f.id}" style="font-weight:700; min-width:20px;">${getItemQty(f.id)}</span>
                             <button class="q-btn" onclick="modCart(${f.id}, 1)">+</button>
                         </div>
                     </div>
@@ -307,7 +332,7 @@
                 <div class="p-card ${active?'active':''}" onclick="selectPack(${p.id})">
                     <i class="fas ${p.icon} p-icon" style="color: ${p.color}"></i>
                     <div class="p-name">${p.name}</div>
-                    <div class="p-price">${p.price} ₽</div>
+                    <div class="p-price" id="pr-${p.id}">${p.price} ₽</div>
                     <input type="number" class="adm-input" style="display:${isAdmin?'block':'none'}" value="${p.price}" onchange="setPrice(${p.id}, this.value, 'p')">
                 </div>
             `}).join('');
@@ -341,6 +366,7 @@
             cart.push({ id: Date.now(), name: color ? `${name} (${color})` : name, price: 0, qty: qty, custom: true });
             document.getElementById('c-name').value = '';
             document.getElementById('c-color').value = '';
+            document.getElementById('c-qty').value = 1;
             renderCart();
         }
 
@@ -348,7 +374,7 @@
             const el = document.getElementById('cart-area');
             const sumEl = document.getElementById('total-sum');
             if(!cart.length) {
-                el.innerHTML = '<div class="empty-text">Пока пусто... Выберите цветы выше 👆</div>';
+                el.innerHTML = '<div class="empty-state">Пока пусто... Выберите цветы выше 👆</div>';
                 sumEl.innerText = 'Итого: 0 ₽';
                 return;
             }
@@ -358,19 +384,19 @@
                 total += item.price * item.qty;
                 if(item.custom) hasCust = true;
                 return `
-                    <div class="c-item">
+                    <div class="cart-item">
                         <div>
                             <div class="c-name">${item.name}</div>
-                            <div class="c-det">${item.qty} шт. ${item.custom?'':'× '+item.price+' ₽'}</div>
+                            <div class="c-info">${item.qty} шт. ${item.custom?'':'× '+item.price+' ₽'}</div>
                         </div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="font-weight:700;">${item.custom?'?':(item.price*item.qty)+' ₽'}</div>
-                            <i class="fas fa-times" onclick="delItem(${idx})" style="color:#ff3b30; cursor:pointer;"></i>
+                        <div style="display:flex; align-items:center;">
+                            <div class="c-price">${item.custom?'?':(item.price*item.qty)+' ₽'}</div>
+                            <i class="fas fa-times c-del" onclick="delItem(${idx})"></i>
                         </div>
                     </div>
                 `;
             }).join('');
-            sumEl.innerText = (hasCust ? 'от ' : '') + total + ' ₽';
+            sumEl.innerText = (hasCust ? 'от ' : '') + 'Итого: ' + total + ' ₽';
         }
 
         function delItem(idx) { cart.splice(idx, 1); renderCart(); renderFlowers(); renderPacks(); }
@@ -380,17 +406,21 @@
             let txt = "🌹 НОВЫЙ ЗАКАЗ:\n\n" + cart.map(i => `• ${i.name} — ${i.qty} шт.`).join('\n');
             let tot = cart.reduce((s, i) => s + (i.price * i.qty), 0);
             txt += `\n\n💰 Итого: ${tot} ₽`;
+            
+            // Добавляем приписку о примерной стоимости
+            txt += `\n\n*Расчет предварительный, точную сумму подтвердит флорист.`;
+            
             navigator.clipboard.writeText(txt).then(() => alert('Состав скопирован!'));
         }
 
         function clearAll() { if(confirm('Очистить корзину?')) { cart = []; renderCart(); renderFlowers(); renderPacks(); } }
-
+        
         function randomBouquet() {
             cart = [];
             let c = Math.floor(Math.random()*3)+3;
             for(let i=0; i<c; i++) {
                 let f = flowers[Math.floor(Math.random()*flowers.length)];
-                let q = Math.floor(Math.random()*5)+1;
+                let q = Math.floor(Math.random()*3)+1;
                 let ex = cart.find(x=>x.id===f.id);
                 if(ex) ex.qty+=q; else cart.push({...f, qty:q, custom:false});
             }
@@ -406,8 +436,8 @@
             val = parseInt(val);
             if(type==='f') flowers.find(x=>x.id===id).price = val; else packs.find(x=>x.id===id).price = val;
             let d = {}; flowers.forEach(f=>d[f.id]=f.price); packs.forEach(p=>d[p.id]=p.price);
-            localStorage.setItem('prices_v9', JSON.stringify(d));
-            renderFlowers(); renderPacks(); renderCart();
+            localStorage.setItem('prices_v14', JSON.stringify(d));
+            document.getElementById(`pr-${id}`).innerText = val + ' ₽'; renderCart();
         }
 
         init();
