@@ -280,20 +280,21 @@
             { id: 15, name: "Подсолнух", price: 550, fileName: "sunflower.jpg" }
         ];
 
-        // ИСПРАВЛЕННЫЙ БЛОК УПАКОВКИ
+        // УПАКОВКА (С ИСПРАВЛЕНИЯМИ)
         const packs = [
-            // Бумага: 2 варианта
+            // Бумага
             { id: 101, name: "Бумага (стандарт)", price: 150, icon: "fa-scroll", color: "#9575CD" },
             { id: 1011, name: "Бумага (премиум)", price: 350, icon: "fa-scroll", color: "#9575CD" },
 
-            // Коробка: 2 варианта
+            // Коробка
             { id: 102, name: "Коробка (S)", price: 350, icon: "fa-box-open", color: "#8D6E63" },
             { id: 1021, name: "Коробка (L)", price: 550, icon: "fa-box-open", color: "#8D6E63" },
 
-            // Сумка (одна, средняя цена)
-            { id: 103, name: "Сумка", price: 350, icon: "fa-shopping-bag", color: "#EC407A" },
+            // Сумка
+            { id: 103, name: "Сумка (стандарт)", price: 150, icon: "fa-shopping-bag", color: "#EC407A" },
+            { id: 1031, name: "Сумка (премиум)", price: 450, icon: "fa-shopping-bag", color: "#EC407A" },
 
-            // Корзина: 2 варианта
+            // Корзина
             { id: 104, name: "Корзина (малая)", price: 500, icon: "fa-shopping-basket", color: "#FFA726" },
             { id: 1041, name: "Корзина (большая)", price: 1500, icon: "fa-shopping-basket", color: "#FFA726" }
         ];
@@ -352,18 +353,7 @@
 
         function selectPack(id) {
             if(event.target.tagName === 'INPUT') return;
-            // Убираем старую упаковку, если выбрана другая (чтобы не было 2 коробок сразу)
-            // Но теперь у нас ID > 100, так что старый фильтр (x.id < 100) работает для цветов.
-            // Нам нужно убрать только другие ПАКИ.
-            // Паки у нас имеют ID >= 100.
-            
-            // Если хотим, чтобы можно было выбрать ТОЛЬКО ОДНУ упаковку:
-            // cart = cart.filter(x => x.id < 100); 
-            
-            // Если хотим разрешить много упаковок - убираем эту строку.
-            // Но обычно упаковка одна. Давай оставим одну.
             cart = cart.filter(x => x.id < 100);
-
             const p = packs.find(x => x.id === id);
             cart.push({...p, qty: 1, custom: false});
             renderPacks(); renderCart();
